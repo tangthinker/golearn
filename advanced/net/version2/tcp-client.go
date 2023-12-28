@@ -9,13 +9,13 @@ import (
 )
 
 const (
-	NamePrefix         = "name-"
-	ContentPrefix      = "content-"
-	CommandPrefix      = "command-"
-	CommandOnline      = "online"
-	CommandLogout      = "logout"
-	CommandCloseServer = "close-server"
-	CommandInputFlag   = "sh"
+	NamePrefix1         = "name-"
+	ContentPrefix1      = "content-"
+	CommandPrefix1      = "command-"
+	CommandOnline1      = "online"
+	CommandLogout1      = "logout"
+	CommandCloseServer1 = "close-server"
+	CommandInputFlag    = "sh"
 )
 
 func main() {
@@ -30,12 +30,12 @@ func main() {
 	clientName, _ := inputReader.ReadString('\n')
 	clientName = strings.TrimSpace(strings.Trim(clientName, "\n"))
 
-	_, _ = conn.Write([]byte(NamePrefix + clientName))
+	_, _ = conn.Write([]byte(NamePrefix1 + clientName))
 
 	buff := make([]byte, 512)
 	lens, _ := conn.Read(buff)
 	read := string(buff[:lens])
-	if read == CommandLogout {
+	if read == CommandLogout1 {
 		fmt.Println(clientName, "is already login!")
 		return
 	}
@@ -49,14 +49,14 @@ func main() {
 		}
 		if strings.Contains(input, CommandInputFlag) {
 			command := strings.TrimSpace(input[len(CommandInputFlag):])
-			_, _ = conn.Write([]byte(CommandPrefix + command))
-			if command == CommandLogout || command == CommandCloseServer {
+			_, _ = conn.Write([]byte(CommandPrefix1 + command))
+			if command == CommandLogout1 || command == CommandCloseServer1 {
 				return
 			}
 			lens, _ = conn.Read(buff)
 			fmt.Println(string(buff[:lens]))
 		} else {
-			_, err = conn.Write([]byte(ContentPrefix + input))
+			_, err = conn.Write([]byte(ContentPrefix1 + input))
 		}
 	}
 }
